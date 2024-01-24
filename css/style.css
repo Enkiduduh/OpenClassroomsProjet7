@@ -1,0 +1,231 @@
+@import url("card_recipe_template.css");
+html {
+  overflow-x: hidden;
+  margin: 0 auto;
+}
+
+body {
+  background: lightgrey;
+  margin: 0 auto;
+}
+
+main {
+  margin: 0 auto;
+  width: 100vw;
+}
+
+header h1 {
+  font-family: "Anton", sans-serif;
+  color: #ffd15b;
+  text-align: center;
+  margin: 0;
+}
+header h3 {
+  font-family: "Anton", sans-serif;
+  color: white;
+}
+
+.header-title {
+  background-image: url("/assets/images/bg_lespetitplats.jpg");
+  height: 500px;
+  width: 100vw;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: top;
+}
+.header-title .title {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  margin-bottom: 100px;
+  padding: 0;
+  position: relative;
+  left: 40px;
+}
+.header-title fa-bullseye {
+  color: white;
+}
+
+.header-searchbar {
+  width: 800px;
+  text-align: center;
+  margin: 20px auto;
+  z-index: 0;
+  display: flex;
+  border: 1px solid white;
+  background: white;
+  border-radius: 11px;
+  align-items: center;
+}
+.header-searchbar input {
+  width: 700px;
+  height: 50px;
+  border-radius: 11px;
+  color: grey;
+  border: none;
+  outline: none;
+}
+.header-searchbar #search-cancel {
+  width: 40px;
+  left: -90px;
+  color: grey;
+  z-index: 5;
+}
+.header-searchbar #search-cancel .fa-xmark {
+  display: none;
+}
+.header-searchbar #search-icon {
+  width: 20px;
+  color: white;
+  background: black;
+  padding: 12px;
+  border-radius: 10px;
+  z-index: 2;
+  position: relative;
+  top: 0px;
+  left: 6px;
+}
+
+.error {
+  color: black;
+  font-size: 25px;
+  text-align: center;
+  background: #ffd15b;
+  font-family: "manrope", sans-serif;
+  margin: 10px 100px;
+  padding: 50px;
+  display: none;
+  border-radius: 16px;
+}
+
+.navbar-filter {
+  display: flex;
+  margin: 5px 100px 10px 100px;
+  font-family: "manrope", sans-serif;
+  font-size: 12px;
+  align-items: center;
+  justify-content: space-between;
+}
+.navbar-filter p {
+  font-family: "Anton", sans-serif;
+  font-size: 18px;
+}
+
+.filter-flex {
+  display: flex;
+}
+
+.filter-container {
+  background: white;
+  border-radius: 8px;
+  height: 40px;
+  margin: 0 30px 0 0;
+  width: 150px;
+  position: relative;
+  z-index: 2;
+}
+
+.filter-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.filter-search-icon {
+  position: relative;
+  left: -10px;
+  color: lightgrey;
+}
+
+.filter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+
+.filter-input {
+  margin: 5px 0;
+  width: 110px;
+  padding: 2px 10px;
+  position: relative;
+  left: 5px;
+  outline-style: none;
+}
+
+.filter-list-ingredients, .filter-list-appliance, .filter-list-ustensils {
+  display: flex;
+  flex-direction: column;
+  height: 140px;
+  overflow-y: scroll;
+  scrollbar-width: none;
+}
+.filter-list-ingredients span, .filter-list-appliance span, .filter-list-ustensils span {
+  padding: 4px 10px;
+}
+
+.filter-hidden-ingredients, .filter-hidden-ustensils, .filter-hidden-appliance {
+  display: none;
+}
+
+.filter-visible-ingredients, .filter-visible-ustensils, .filter-visible-appliance {
+  background: white;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+.backgroundElement {
+  transition: font-size 330ms ease-in-out;
+}
+.backgroundElement:hover {
+  background: #ffd15b;
+  width: 100%;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.selectedTags-appliance, .selectedTags-ustensils, .selectedTags-ingredients {
+  display: flex;
+  flex-direction: column;
+  background: #ffd15b;
+  font-size: 12px;
+  padding: 0px 5px;
+  margin: 5px 0;
+}
+
+.suggestions .suggestions-li {
+  color: white;
+  background: grey;
+  border: 1px solid black;
+}
+
+.listTags {
+  display: flex;
+  align-items: center;
+  margin: 10px 90px;
+}
+.listTags .show-tag {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 15px;
+  border-radius: 8px;
+  width: 130px;
+  margin: 0px 10px 30px 10px;
+  background: #ffd15b;
+  font-size: 11px;
+  font-family: "manrope", sans-serif;
+}
+.listTags .show-tag:hover {
+  font-weight: bolder;
+}
+.listTags .show-tag:hover i {
+  border: 1px solid black;
+  border-radius: 50px;
+  color: #ffd15b;
+  background: black;
+  padding: 1px 2px;
+}
+.listTags .show-tag .cancel {
+  font-weight: bold;
+  font-size: 14px;
+}/*# sourceMappingURL=style.css.map */

@@ -1,0 +1,74 @@
+p, h5 {
+  font-family: "manrope", sans-serif;
+}
+
+h3 {
+  font-family: "Anton", sans-serif;
+}
+
+.card-recipe-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  margin: 0 100px;
+  gap: 30px;
+}
+
+.card-recipe {
+  width: 330px;
+  border-radius: 20px;
+  overflow: hidden;
+  background: white;
+}
+
+.card-recipe-cover {
+  height: 180px;
+}
+.card-recipe-cover img {
+  -o-object-fit: cover;
+     object-fit: cover;
+  width: 330px;
+  height: 180px;
+}
+.card-recipe-cover .card-recipe-time {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffd15b;
+  font-size: 10px;
+  font-family: "manrope", sans-serif;
+  width: 40px;
+  padding: 4px;
+  border-radius: 20px;
+  position: relative;
+  top: -170px;
+  left: 260px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 2px;
+}
+
+.card-recipe-info {
+  margin: 20px;
+}
+.card-recipe-info h5 {
+  color: grey;
+  font-size: 14px;
+}
+.card-recipe-info p {
+  font-size: 14px;
+}
+.card-recipe-info .card-recipe-description .description {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  height: 100px;
+}
+.card-recipe-info .data-ingredients {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.card-recipe-info .data-ingredients p {
+  font-size: 12px;
+  margin: 0px;
+}
+.card-recipe-info .data-ingredients .quantity {
+  margin-bottom: 20px;
+  color: grey;
+}/*# sourceMappingURL=card_recipe_template.css.map */
