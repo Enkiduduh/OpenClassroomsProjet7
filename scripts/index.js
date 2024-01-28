@@ -156,6 +156,7 @@ searchBar.addEventListener("click", function(){
     tagsList.ing = [];
     tagsList.app = [];
     tagsList.ust = [];
+    listTagsHtml.innerHTML = "";
     init();
     searchBar.addEventListener("input", function(){
         console.log("Input event triggered");
