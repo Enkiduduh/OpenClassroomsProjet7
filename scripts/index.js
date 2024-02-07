@@ -110,18 +110,18 @@ function searchInRecipes(arrayOfRecipes, input, tagslist) {
       tagslist.app = [];
       tagslist.ust = [];
       recipesSection.innerHTML = "";
-      for ( i = 0; i < arrayOfRecipes.length; i++) {
+      arrayOfRecipes.forEach(recipe =>  {
           const lowerInput = input.toLowerCase();
-          if (arrayOfRecipes[i].name.toLowerCase().includes(lowerInput) ||
-              arrayOfRecipes[i].description.toLowerCase().includes(lowerInput) ||
-              arrayOfRecipes[i].ingredients.some(ingredient => ingredient.ingredient.toLowerCase().includes(lowerInput))
+          if (recipe.name.toLowerCase().includes(lowerInput) ||
+              recipe.description.toLowerCase().includes(lowerInput) ||
+              recipe.ingredients.some(ingredient => ingredient.ingredient.toLowerCase().includes(lowerInput))
           ) {
-              temporyRecipesArr.push(arrayOfRecipes[i]);
+              temporyRecipesArr.push(recipe);
           }
 
-          const isMatchIngredient = arrayOfRecipes[i].ingredients.some(ingredient => ingredient.ingredient.toLowerCase().includes(lowerInput));
-          const isMatchAppliance = arrayOfRecipes[i].appliance.toLowerCase().includes(lowerInput);
-          const isMatchUstensil = arrayOfRecipes[i].ustensils.some(ustensil => ustensil.toLowerCase().includes(lowerInput));
+          const isMatchIngredient = recipe.ingredients.some(ingredient => ingredient.ingredient.toLowerCase().includes(lowerInput));
+          const isMatchAppliance = recipe.appliance.toLowerCase().includes(lowerInput);
+          const isMatchUstensil = recipe.ustensils.some(ustensil => ustensil.toLowerCase().includes(lowerInput));
           if (isMatchIngredient) {
               tagslistTemp.ing.push(capitalize(input))
           } else if (isMatchAppliance) {
@@ -135,7 +135,7 @@ function searchInRecipes(arrayOfRecipes, input, tagslist) {
           tagslist.ing = [...new Set(flattenedDataIng)];
           tagslist.app = [...new Set(flattenedDataApp)];
           tagslist.ust = [...new Set(flattenedDataUst)];
-      };
+      });
       displayData(temporyRecipesArr);
       updateAvailableFilters(temporyRecipesArr, filtersList)
   }
