@@ -307,7 +307,7 @@ function initializeFilters() {
   // Initialisez vos filtres ici en utilisant updateAvailableFilters
   updateAvailableFilters(recipesList, filtersList);
 
-  // Initialisez les gestionnaires d'événements pour les filtres
+  // Initialisation des gestionnaires d'événements pour les filtres
   const suggestedTagsForIng = document.getElementById("filter-ingredients-input");
   const filterIngredients = document.getElementById("filter-ingredients");
   const ingredientsIcon = document.getElementById("ingredients-icon");
