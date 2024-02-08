@@ -1,11 +1,20 @@
 function recipesTemplate(data) {
-    const { id, image, name, servings, time, ingredients, description, appliance, ustensils } = data;
+  const {
+    id,
+    image,
+    name,
+    servings,
+    time,
+    ingredients,
+    description,
+    appliance,
+    ustensils,
+  } = data;
 
-    function getRecipeCardDOM() {
-      const article = document.createElement( "article" );
-      article.classList.add("card-recipe");
-      article.innerHTML =
-      `<div class="card-recipe-cover">
+  function getRecipeCardDOM() {
+    const article = document.createElement("article");
+    article.classList.add("card-recipe");
+    article.innerHTML = `<div class="card-recipe-cover">
           <img src="assets/images/${data.image}" alt="${data.name}">
           <div class="card-recipe-time">${data.time}min</div>
         </div>
@@ -21,24 +30,35 @@ function recipesTemplate(data) {
               ${generateIngredientsList(data.ingredients)}
             </div>
           </div>
-        </div>`
+        </div>`;
 
-      return (article);
+    return article;
 
-        // Fonction pour générer la liste des ingrédients
+    // Fonction pour générer la liste des ingrédients
     function generateIngredientsList(ingredients) {
-      return ingredients.map(ingredient => {
+      return ingredients
+        .map((ingredient) => {
           // Vérifiez si l'unité est définie pour cet ingrédient
-          const unit = ingredient.unit ? ` ${ingredient.unit}` : '';
+          const unit = ingredient.unit ? ` ${ingredient.unit}` : "";
           if (!ingredient.quantity) {
-              return `<div class="ingredient-container"><p class="ingredient">${ingredient.ingredient}</p><p class="quantity">-</p></div>`;
+            return `<div class="ingredient-container"><p class="ingredient">${ingredient.ingredient}</p><p class="quantity">-</p></div>`;
           } else {
-              return `<div class="ingredient-container"><p class="ingredient">${ingredient.ingredient}</p><p class="quantity">${ingredient.quantity}${unit}</p></div>`;
+            return `<div class="ingredient-container"><p class="ingredient">${ingredient.ingredient}</p><p class="quantity">${ingredient.quantity}${unit}</p></div>`;
           }
-      }).join('');
+        })
+        .join("");
     }
   }
-  return {  id, image, name, servings, ingredients, time, description, appliance, ustensils, getRecipeCardDOM };
-
+  return {
+    id,
+    image,
+    name,
+    servings,
+    ingredients,
+    time,
+    description,
+    appliance,
+    ustensils,
+    getRecipeCardDOM,
+  };
 }
-
