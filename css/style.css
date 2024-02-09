@@ -10,7 +10,7 @@ body {
 }
 
 main {
-  margin: 0 auto;
+  margin: 0 auto 100px auto;
   width: 100vw;
 }
 
@@ -100,7 +100,7 @@ header h3 {
 
 .navbar-filter {
   display: flex;
-  margin: 5px 100px 10px 100px;
+  margin: 5px 130px 10px 130px;
   font-family: "manrope", sans-serif;
   font-size: 12px;
   align-items: center;
@@ -202,7 +202,7 @@ header h3 {
 .listTags {
   display: flex;
   align-items: center;
-  margin: 10px 90px;
+  margin: 10px 120px;
 }
 .listTags .show-tag {
   display: flex;
