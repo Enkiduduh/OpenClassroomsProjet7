@@ -14,7 +14,6 @@ const tagsList = {
 };
 
 
-
 function showTagsList (arrayOfTagList) {
     let tagListModelHtml = "";
     const searchValue = searchBar.value.toLowerCase();
