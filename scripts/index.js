@@ -88,7 +88,7 @@ function searchInRecipes(arrayOfRecipes, input, tagslist) {
   }
   if (input.length >= 3) {
     searchBar.addEventListener("input", function () {
-      if (temporyRecipesArr.length === 0) {
+      if (temporyRecipesArr.length === 0 && input.length > 2) {
         console.log("test recherche principale NOK");
         recipesSection.innerHTML = "";
         errorMsgHTML.style.display = "block";
@@ -144,6 +144,7 @@ function searchInRecipes(arrayOfRecipes, input, tagslist) {
     }
     displayData(temporyRecipesArr);
     updateAvailableFilters(temporyRecipesArr, filtersList);
+  } else {
   }
 }
 
@@ -192,6 +193,20 @@ function setupFilter(
   filteredRecipesArray,
   filterslist
 ) {
+  // Ajoutez un gestionnaire d'événements de clic à l'échelle du document
+  document.addEventListener("click", function (event) {
+    const isInsideDropdown = filterElement.contains(event.target);
+    const isInputClicked = input.contains(event.target);
+    // Vérifiez si le clic provient de l'intérieur ou de l'extérieur de la fenêtre
+    if (!isInsideDropdown && !isInputClicked) {
+      // Si le clic provient de l'extérieur, fermez la fenêtre sans activer le toggle
+      hiddenElement.classList.remove(`filter-visible-${property}`);
+      hiddenElement.classList.add(`filter-hidden-${property}`);
+      iconElement.classList.remove("fa-angle-up");
+      iconElement.classList.add("fa-angle-down");
+    }
+  });
+
   filterElement.addEventListener("click", function () {
     toggleDropdown(filterElement, iconElement, hiddenElement, property);
     if (dropdownOpen == 0) {
@@ -229,8 +244,9 @@ function setupFilter(
           arrayDataUniques[i]
         )}</span>`;
       }
-      dropdownOpen = 1;
+      // dropdownOpen = 1;
     }
+
     const tags = document.querySelectorAll(".tag");
 
     if (filteredRecipesArray > 0) {
@@ -244,6 +260,7 @@ function setupFilter(
         updateAvailableFilters(recipesList, filtersList);
       }
     });
+
     tags.forEach(attachTagClickEvent); // fonctionne
   });
 }
