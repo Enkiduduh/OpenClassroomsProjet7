@@ -86,9 +86,10 @@ function searchInRecipes(arrayOfRecipes, input, tagslist) {
   } else {
     reset.style.display = "none";
   }
+  input = searchBar.value.trim();
   if (input.length >= 3) {
     searchBar.addEventListener("input", function () {
-      if (temporyRecipesArr.length === 0) {
+      if (temporyRecipesArr.length === 0 && input.length > 2) {
         console.log("test recherche principale NOK");
         recipesSection.innerHTML = "";
         errorMsgHTML.style.display = "block";
@@ -147,11 +148,23 @@ function searchInRecipes(arrayOfRecipes, input, tagslist) {
   }
 }
 
+searchBar.addEventListener("input", function () {
+  const input = searchBar.value.trim(); // Obtenez la valeur de l'entrée et supprimez les espaces superflus
+  if (input.length >= 3) { // Vérifiez si la longueur de l'entrée est d'au moins 3 caractères
+    console.log("Input event triggered");
+    temporyRecipesArr = [];
+    searchInRecipes(recipesList, input, tagsList); // Effectuez la recherche uniquement si la longueur de l'entrée est suffisante
+  } else {
+    console.log("Input length less than 3 characters, skipping search");
+  }
+});
+
 searchBar.addEventListener("click", function () {
   const errorMsgHTML = document.querySelector(".error");
   const recipesSection = document.querySelector(".card-recipe-container");
   const reset = document.querySelector(".fa-xmark");
   reset.style.display = "none";
+  searchBar.textContent = "";
   searchBar.value = "";
   recipesSection.innerHTML = "";
   errorMsgHTML.innerHTML = "";
@@ -164,12 +177,6 @@ searchBar.addEventListener("click", function () {
   tagsList.ust = [];
   listTagsHtml.innerHTML = "";
   init();
-  searchBar.addEventListener("input", function () {
-    console.log("Input event triggered");
-    searchBar.textContent = "";
-    temporyRecipesArr = [];
-    searchInRecipes(recipesList, searchBar.value, tagsList);
-  });
 });
 
 // Fonction pour activer/désactiver le menu déroulant du filtre
@@ -192,6 +199,20 @@ function setupFilter(
   filteredRecipesArray,
   filterslist
 ) {
+document.addEventListener('click', function(event) {
+        const isInsideDropdown = filterElement.contains(event.target);
+        const isInputClicked = input.contains(event.target); // Vérifie si l'input est cliqué
+        // Vérifie si le clic provient de l'intérieur ou de l'extérieur de la fenêtre
+        if (!isInsideDropdown && !isInputClicked) {
+            // Si le clic provient de l'extérieur et n'est pas dans l'input, fermez la fenêtre
+            hiddenElement.classList.remove(`filter-visible-${property}`);
+            hiddenElement.classList.add(`filter-hidden-${property}`);
+            iconElement.classList.remove("fa-angle-up");
+            iconElement.classList.add("fa-angle-down");
+        }
+    });
+
+
   filterElement.addEventListener("click", function () {
     toggleDropdown(filterElement, iconElement, hiddenElement, property);
     if (dropdownOpen == 0) {
