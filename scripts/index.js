@@ -169,6 +169,7 @@ searchBar.addEventListener("click", function () {
   recipesSection.innerHTML = "";
   errorMsgHTML.innerHTML = "";
   errorMsgHTML.style.display = "none";
+  temporyRecipesArr = [];
   filtersList.ing = [];
   filtersList.app = [];
   filtersList.ust = [];
@@ -212,7 +213,6 @@ document.addEventListener('click', function(event) {
         }
     });
 
-
   filterElement.addEventListener("click", function () {
     toggleDropdown(filterElement, iconElement, hiddenElement, property);
     if (dropdownOpen == 0) {
@@ -250,13 +250,13 @@ document.addEventListener('click', function(event) {
           arrayDataUniques[i]
         )}</span>`;
       }
-      dropdownOpen = 1;
     }
     const tags = document.querySelectorAll(".tag");
 
     if (filteredRecipesArray > 0) {
       updateAvailableFilters(filteredRecipesArray, filterslist);
     }
+
 
     input.addEventListener("input", function () {
       if (input.value.length >= 3) {
