@@ -75,34 +75,43 @@ function searchInRecipes(arrayOfRecipes, input, tagslist) {
   if (input.length >= 1) {
       reset.style.display = "inline";
       reset.addEventListener("click", function() {
-        console.log(searchBar.textContent)
-          searchBar.value = "";
-          reset.style.display = "none";
-          recipesSection.innerHTML = "";
-          temporyRecipesArr = [];
-          tagslist.ing = [];
-          tagslist.app = [];
-          tagslist.ust = [];
-          filtersList.ing = [];
-          filtersList.app = [];
-          filtersList.ust = [];
-          displayData(arrayOfRecipes);
+        reset.style.display = "none";
+        searchBar.value = "";
+        recipesSection.innerHTML = "";
+        errorMsgHTML.innerHTML = "";
+        errorMsgHTML.style.display = "none";
+        filtersList.ing = [];
+        filtersList.app = [];
+        filtersList.ust = [];
+        temporyRecipesArr = [];
+        tagsList.ing = [];
+        tagsList.app = [];
+        tagsList.ust = [];
+        listTagsHtml.innerHTML = "";
+        updateAvailableFilters(recipesList, filtersList);
+        init();
       })
   } else {
       reset.style.display = "none";
   }
   if (input.length >= 3) {
     searchBar.addEventListener("input", function(){
-      if (temporyRecipesArr.length === 0) {
-        console.log("test recherche principale NOK")
-          recipesSection.innerHTML = "";
-          errorMsgHTML.style.display = "block";
-          errorMsgHTML.innerHTML = `Aucune recette ne contient "${searchBar.value}", vous pouvez chercher par exemple « tarte aux pommes », « poisson », etc. `;
-      } else {
-        console.log("test recherche principale OK")
+      if (searchBar.value.length <= 2) {
+        recipesSection.innerHTML = "";
+        displayData(recipesList);
         errorMsgHTML.style.display = "none";
+      } else {
+        if (temporyRecipesArr.length === 0) {
+          console.log("test recherche principale NOK")
+            recipesSection.innerHTML = "";
+            errorMsgHTML.style.display = "block";
+            errorMsgHTML.innerHTML = `Aucune recette ne contient "${searchBar.value}", vous pouvez chercher par exemple « tarte aux pommes », « poisson », etc. `;
+        } else {
+          console.log("test recherche principale OK")
+          errorMsgHTML.style.display = "none";
+        }
       }
-  })
+    })
       const tagslistTemp = {
           ing: [],
           app: [],
@@ -149,7 +158,7 @@ searchBar.addEventListener("click", function(){
     const recipesSection = document.querySelector(".card-recipe-container");
     const reset = document.querySelector(".fa-xmark");
     reset.style.display = "none";
-    searchBar.value = "";
+    // searchBar.value = "";
     recipesSection.innerHTML = "";
     errorMsgHTML.innerHTML = "";
     errorMsgHTML.style.display = "none";
