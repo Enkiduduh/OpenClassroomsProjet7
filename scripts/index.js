@@ -24,6 +24,7 @@ let dataSet = {
 let error = false;
 const searchBar = document.getElementById("searchbar");
 const searchIcon = document.getElementById("search-icon");
+const counterRecipes = document.querySelector(".recipe-counter");
 
 function capitalize(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
@@ -58,12 +59,13 @@ async function displayData(recipes) {
 async function init() {
     const { recipes } = await getRecipes();
     displayData(recipes);
+    counterRecipes.textContent = `${recipesList.length} recettes`
+
 }
 init();
 
 // Appelez la fonction d'initialisation des filtres au chargement de la page
 initializeFilters();
-
 
 
 function searchInRecipes(arrayOfRecipes, input, tagslist) {
@@ -138,6 +140,7 @@ function searchInRecipes(arrayOfRecipes, input, tagslist) {
       };
       displayData(temporyRecipesArr);
       updateAvailableFilters(temporyRecipesArr, filtersList)
+      counterRecipes.textContent = `${temporyRecipesArr.length} recettes`
   }
 }
 

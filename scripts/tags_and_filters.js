@@ -92,10 +92,14 @@ function filterRecipesByTags(arrayOfRecipes, tagslist) {
     displayData(filteredRecipes);
     filteredRecipesCopy = [...filteredRecipes];
     updateAvailableFilters(filteredRecipes, filtersList);
+    counterRecipes.textContent = `${filteredRecipes.length} recettes`
+
   } else {
     console.log("hey hey hey");
     // Si tagslist est vide, afficher arrayOfRecipes par défaut
     displayData(arrayOfRecipes);
+    counterRecipes.textContent = `${filteredRecipes.length} recettes`
+
   }
 }
 
@@ -104,6 +108,7 @@ function deleteTagsList(index, category) {
   tagsList[category].splice(index, 1);
   showTagsList(tagsList);
   console.log("deleteTagsList A");
+  counterRecipes.textContent = `${recipesList.length} recettes`
 
   if (
     tagsList.ing.length > 0 ||
@@ -112,7 +117,9 @@ function deleteTagsList(index, category) {
   ) {
     recipesSection.innerHTML = "";
     filterRecipesByTags(recipesList, tagsList);
+    counterRecipes.textContent = `${filteredRecipes.length} recettes`
     console.log("deleteTagsList B");
+
   } else if (
     tagsList.ing.length == 0 &&
     tagsList.app.length == 0 &&
@@ -125,11 +132,13 @@ function deleteTagsList(index, category) {
       filtersList.app = [];
       filtersList.ust = [];
       displayData(recipesList);
+      counterRecipes.textContent = `${recipesList.length} recettes`
       dropdownOpen = 0;
-      location.reload();
     } else {
       recipesSection.innerHTML = "";
       searchInRecipes(recipesList, searchBar.value, tagsList);
+      counterRecipes.textContent = `${recipesList.length} recettes`
+
       console.log("deleteTagsList C2");
     }
   } else if (
