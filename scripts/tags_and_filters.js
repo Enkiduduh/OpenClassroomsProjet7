@@ -71,7 +71,7 @@ function filterRecipesByTags(arrayOfRecipes, tagslist) {
     tagslist.ust.length > 0
   ) {
     // Filtrer les recettes en fonction des tagslist
-    const filteredRecipes = arrayOfRecipes.filter((recipe) => {
+    filteredRecipes = arrayOfRecipes.filter((recipe) => {
       const matchesIng = tagslist.ing.every((tag) =>
         recipe.ingredients.some((ingredient) =>
           ingredient.ingredient.toLowerCase().includes(tag.toLowerCase())
@@ -90,16 +90,16 @@ function filterRecipesByTags(arrayOfRecipes, tagslist) {
     });
 
     displayData(filteredRecipes);
-    filteredRecipesCopy = [...filteredRecipes];
+    // filteredRecipesCopy = [...filteredRecipes];
     updateAvailableFilters(filteredRecipes, filtersList);
-    counterRecipes.textContent = `${filteredRecipes.length} recettes`
-
+    counterRecipes.textContent = `${filteredRecipes.length} recettes`;
+    console.log("filteredRecipes existe");
+    console.log(filteredRecipes);
   } else {
     console.log("hey hey hey");
     // Si tagslist est vide, afficher arrayOfRecipes par défaut
     displayData(arrayOfRecipes);
-    counterRecipes.textContent = `${filteredRecipes.length} recettes`
-
+    counterRecipes.textContent = `${filteredRecipes.length} recettes`;
   }
 }
 
@@ -108,7 +108,7 @@ function deleteTagsList(index, category) {
   tagsList[category].splice(index, 1);
   showTagsList(tagsList);
   console.log("deleteTagsList A");
-  counterRecipes.textContent = `${recipesList.length} recettes`
+  counterRecipes.textContent = `${recipesList.length} recettes`;
 
   if (
     tagsList.ing.length > 0 ||
@@ -117,9 +117,8 @@ function deleteTagsList(index, category) {
   ) {
     recipesSection.innerHTML = "";
     filterRecipesByTags(recipesList, tagsList);
-    counterRecipes.textContent = `${filteredRecipes.length} recettes`
+    counterRecipes.textContent = `${filteredRecipes.length} recettes`;
     console.log("deleteTagsList B");
-
   } else if (
     tagsList.ing.length == 0 &&
     tagsList.app.length == 0 &&
@@ -132,12 +131,12 @@ function deleteTagsList(index, category) {
       filtersList.app = [];
       filtersList.ust = [];
       displayData(recipesList);
-      counterRecipes.textContent = `${recipesList.length} recettes`
+      counterRecipes.textContent = `${recipesList.length} recettes`;
       dropdownOpen = 0;
     } else {
       recipesSection.innerHTML = "";
       searchInRecipes(recipesList, searchBar.value, tagsList);
-      counterRecipes.textContent = `${recipesList.length} recettes`
+      counterRecipes.textContent = `${temporyRecipesArr.length} recettes`;
 
       console.log("deleteTagsList C2");
     }
