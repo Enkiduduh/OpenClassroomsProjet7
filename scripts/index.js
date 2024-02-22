@@ -59,7 +59,7 @@ async function displayData(recipes) {
 async function init() {
     const { recipes } = await getRecipes();
     displayData(recipes);
-    counterRecipes.textContent = `${recipesList.length} recettes`
+    counterRecipes.textContent = `${recipesList.length} recette(s)`
 
 }
 init();
@@ -74,6 +74,8 @@ function searchInRecipes(arrayOfRecipes, input, tagslist) {
   const errorMsgHTML = document.querySelector(".error");
   if (input.length >= 1) {
       reset.style.display = "inline";
+      displayData(recipesList)
+      counterRecipes.textContent = `${recipesList.length} recettes`
       reset.addEventListener("click", function() {
         reset.style.display = "none";
         errorMsgHTML.innerHTML = "";
@@ -81,6 +83,8 @@ function searchInRecipes(arrayOfRecipes, input, tagslist) {
         deleteMatchingTag(tagslist.ing, "ing");
         deleteMatchingTag(tagslist.app, "app");
         deleteMatchingTag(tagslist.ust, "ust");
+        searchBar.value = "";
+
       })
   } else {
       reset.style.display = "none";
@@ -88,15 +92,16 @@ function searchInRecipes(arrayOfRecipes, input, tagslist) {
   if (input.length >= 3) {
     searchBar.addEventListener("input", function(){
       if (searchBar.value.length <= 2) {
-        if (filteredRecipes) {
+        if (filteredRecipes.length > 0) {
+          recipesSection.innerHTML = "";
            displayData(filteredRecipes);
-           filterRecipesByTags(filteredRecipes, tagsList);
-        } else if (temporyRecipesArr) {
-          displayData(temporyRecipesArr);
-        } else {
+           console.log("display filteredRecipes")
+        }
+        else {
           errorMsgHTML.style.display = "none";
           recipesSection.innerHTML = "";
           displayData(recipesList);
+          console.log("display recipeList")
         }
       } else {
         if (temporyRecipesArr.length === 0) {
@@ -149,7 +154,7 @@ function searchInRecipes(arrayOfRecipes, input, tagslist) {
 
     displayData(temporyRecipesArr);
     updateAvailableFilters(temporyRecipesArr, filtersList)
-    counterRecipes.textContent = `${temporyRecipesArr.length} recettes`
+    counterRecipes.textContent = `${temporyRecipesArr.length} recette(s)`
 
   }
 }
@@ -160,15 +165,21 @@ function deleteMatchingTag(tagList, category) {
     const index = tagList.findIndex(tag => tag.toLowerCase().trim() === searchBar.value.toLowerCase().trim());
     if (index !== -1) {
         tagList.splice(index, 1);
-        counterRecipes.textContent = `${recipesList.length} recettes`;
+        counterRecipes.textContent = `${recipesList.length} recette(s)`;
         searchBar.value = ""; // Effacer la valeur de la searchBar une fois le tag supprimé
         recipesSection.innerHTML = "";
-        filterRecipesByTags(recipesList, tagsList);
+        displayData(recipesList);
         updateAvailableFilters(recipesList, filtersList);
+        ("TEST2 ?");
     }
     if (!searchBar.value && (tagsList.ing.length || tagsList.app.length || tagsList.ust.length)) {
-      searchInRecipes(recipesList, "", tagsList);
+      recipesSection.innerHTML = "";
+      filterRecipesByTags(recipesList, tagsList)
       updateAvailableFilters(recipesList, filtersList);
+      showTagsList(tagsList);
+
+      counterRecipes.textContent = `${filteredRecipes.length} recette(s)`
+      console.log("TEST3 ?");
     }
   }
 }
@@ -183,8 +194,10 @@ function deleteMatchingTagBackspace(tagList, category) {
     showTagsList(tagsList);
     // Réafficher les recettes avec les filtres actuels
     recipesSection.innerHTML = "";
-    filterRecipesByTags(recipesList, tagsList);
+    displayData(recipesList);
     updateAvailableFilters(recipesList, filtersList);
+    counterRecipes.textContent = `${recipesList.length} recettes`
+
   }
 }
 
@@ -204,16 +217,11 @@ searchBar.addEventListener("click", function(){
     const errorMsgHTML = document.querySelector(".error");
     const recipesSection = document.querySelector(".card-recipe-container");
     const reset = document.querySelector(".fa-xmark");
-    reset.style.display = "none";
-    errorMsgHTML.innerHTML = "";
-    errorMsgHTML.style.display = "none";
     updateAvailableFilters(recipesList, filtersList);
 
   });
 
   searchBar.addEventListener("input", function(){
-      // console.log("Input event triggered");
-      // searchBar.textContent = "";
       temporyRecipesArr = [];
       searchInRecipes(recipesList, searchBar.value, tagsList);
   });

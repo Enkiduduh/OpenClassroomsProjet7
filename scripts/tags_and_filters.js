@@ -92,7 +92,7 @@ function filterRecipesByTags(arrayOfRecipes, tagslist) {
     displayData(filteredRecipes);
     // filteredRecipesCopy = [...filteredRecipes];
     updateAvailableFilters(filteredRecipes, filtersList);
-    counterRecipes.textContent = `${filteredRecipes.length} recettes`;
+    counterRecipes.textContent = `${filteredRecipes.length} recette(s)`;
     console.log("filteredRecipes existe");
     console.log(filteredRecipes);
   } else {
@@ -100,7 +100,7 @@ function filterRecipesByTags(arrayOfRecipes, tagslist) {
     // Si tagslist est vide, afficher arrayOfRecipes par défaut
     recipesSection.innerHTML = "";
     displayData(arrayOfRecipes);
-    counterRecipes.textContent = `${arrayOfRecipes.length} recettes`;
+    counterRecipes.textContent = `${arrayOfRecipes.length} recette(s)`;
   }
 }
 
@@ -109,7 +109,7 @@ function deleteTagsList(index, category) {
   tagsList[category].splice(index, 1);
   showTagsList(tagsList);
   console.log("deleteTagsList A");
-  counterRecipes.textContent = `${recipesList.length} recettes`;
+  counterRecipes.textContent = `${recipesList.length} recette(s)`;
 
   if (
     tagsList.ing.length > 0 ||
@@ -118,7 +118,7 @@ function deleteTagsList(index, category) {
   ) {
     recipesSection.innerHTML = "";
     filterRecipesByTags(recipesList, tagsList);
-    counterRecipes.textContent = `${filteredRecipes.length} recettes`;
+    counterRecipes.textContent = `${filteredRecipes.length} recette(s)`;
     console.log("deleteTagsList B");
   } else if (
     tagsList.ing.length == 0 &&
@@ -132,12 +132,12 @@ function deleteTagsList(index, category) {
       filtersList.app = [];
       filtersList.ust = [];
       displayData(recipesList);
-      counterRecipes.textContent = `${recipesList.length} recettes`;
+      counterRecipes.textContent = `${recipesList.length} recette(s)`;
       dropdownOpen = 0;
     } else {
       recipesSection.innerHTML = "";
       searchInRecipes(recipesList, searchBar.value, tagsList);
-      counterRecipes.textContent = `${temporyRecipesArr.length} recettes`;
+      counterRecipes.textContent = `${temporyRecipesArr.length} recette(s)`;
 
       console.log("deleteTagsList C2");
     }
