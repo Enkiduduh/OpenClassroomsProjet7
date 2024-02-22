@@ -76,7 +76,6 @@ function searchInRecipes(arrayOfRecipes, input, tagslist) {
       reset.style.display = "inline";
       reset.addEventListener("click", function() {
         reset.style.display = "none";
-        // recipesSection.innerHTML = "";
         errorMsgHTML.innerHTML = "";
         errorMsgHTML.style.display = "none";
         deleteMatchingTag(tagslist.ing, "ing");
@@ -116,10 +115,10 @@ function searchInRecipes(arrayOfRecipes, input, tagslist) {
           app: [],
           ust: []
       };
+    tagslist.ing = [];
+    tagslist.app = [];
+    tagslist.ust = [];
 
-      // tagslist.ing = [];
-      // tagslist.app = [];
-      // tagslist.ust = [];
       recipesSection.innerHTML = "";
 
         for ( i = 0; i < arrayOfRecipes.length; i++) {
@@ -174,16 +173,29 @@ function deleteMatchingTag(tagList, category) {
   }
 }
 
-// Ajouter un écouteur d'événements pour la touche Backspace
-searchBar.addEventListener('keydown', function(event) {
-  // Vérifier si la touche pressée est la touche Backspace et que la valeur de la barre de recherche est vide
-  if (event.key === 'Backspace' && searchBar.value.length === 0) {
-      // Récupérer le dernier élément de tagslist et le supprimer
-      const lastTagIndex = tagslist.length - 1;
-      tagslist.splice(lastTagIndex, 1);
-      // Mettre à jour l'affichage des tags
-      // Réafficher les recettes avec les filtres actuels
-      searchInRecipes(recipesList, "", tagslist);
+function deleteMatchingTagBackspace(tagList, category) {
+  // Vérifier si la valeur de searchBar est vide
+  if (!searchBar.value && tagList.length > 0) {
+    // Supprimer le dernier tag de la liste
+    const lastTag = tagList.pop();
+    console.log("Deleted tag:", lastTag);
+    // Mettre à jour l'affichage des tags
+    showTagsList(tagsList);
+    // Réafficher les recettes avec les filtres actuels
+    recipesSection.innerHTML = "";
+    filterRecipesByTags(recipesList, tagsList);
+    updateAvailableFilters(recipesList, filtersList);
+  }
+}
+
+
+searchBar.addEventListener('input', function(event) {
+  // Vérifier si la valeur de searchBar est vide
+  if (searchBar.value === '') {
+    // Appeler la fonction pour supprimer le dernier tag
+    deleteMatchingTagBackspace(tagsList.ing, "ing");
+    deleteMatchingTagBackspace(tagsList.app, "app");
+    deleteMatchingTagBackspace(tagsList.ust, "ust");
   }
 });
 
