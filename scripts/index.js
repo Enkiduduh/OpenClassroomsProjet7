@@ -72,34 +72,33 @@ function searchInRecipes(arrayOfRecipes, input, tagslist) {
   const reset = document.querySelector(".fa-xmark");
   const recipesSection = document.querySelector(".card-recipe-container");
   const errorMsgHTML = document.querySelector(".error");
-  // if (input.length >= 1) {
-  //     reset.style.display = "inline";
-  //     reset.addEventListener("click", function() {
-  //       reset.style.display = "none";
-  //       // searchBar.value = "";
-  //       // recipesSection.innerHTML = "";
-  //       errorMsgHTML.innerHTML = "";
-  //       errorMsgHTML.style.display = "none";
-  //       // filtersList.ing = [];
-  //       // filtersList.app = [];
-  //       // filtersList.ust = [];
-  //       // temporyRecipesArr = [];
-  //       // tagslist.ing = [];
-  //       // tagslist.app = [];
-  //       // tagslist.ust = [];
-  //       // listTagsHtml.innerHTML = "";
-  //       updateAvailableFilters(recipesList, filtersList);
-  //       init();
-  //     })
-  // } else {
-  //     reset.style.display = "none";
-  // }
+  if (input.length >= 1) {
+      reset.style.display = "inline";
+      reset.addEventListener("click", function() {
+        reset.style.display = "none";
+        // recipesSection.innerHTML = "";
+        errorMsgHTML.innerHTML = "";
+        errorMsgHTML.style.display = "none";
+        deleteMatchingTag(tagslist.ing, "ing");
+        deleteMatchingTag(tagslist.app, "app");
+        deleteMatchingTag(tagslist.ust, "ust");
+      })
+  } else {
+      reset.style.display = "none";
+  }
   if (input.length >= 3) {
     searchBar.addEventListener("input", function(){
       if (searchBar.value.length <= 2) {
-        // recipesSection.innerHTML = "";
-        // displayData(recipesList);
-        errorMsgHTML.style.display = "none";
+        if (filteredRecipes) {
+           displayData(filteredRecipes);
+           filterRecipesByTags(filteredRecipes, tagsList);
+        } else if (temporyRecipesArr) {
+          displayData(temporyRecipesArr);
+        } else {
+          errorMsgHTML.style.display = "none";
+          recipesSection.innerHTML = "";
+          displayData(recipesList);
+        }
       } else {
         if (temporyRecipesArr.length === 0) {
           console.log("test recherche principale NOK")
@@ -118,13 +117,9 @@ function searchInRecipes(arrayOfRecipes, input, tagslist) {
           ust: []
       };
 
-      const previousIngValues = tagslist.ing.slice();
-      const previousAppValues = tagslist.app.slice();
-      const previousUstValues = tagslist.ust.slice();
-
-      tagslist.ing = [];
-      tagslist.app = [];
-      tagslist.ust = [];
+      // tagslist.ing = [];
+      // tagslist.app = [];
+      // tagslist.ust = [];
       recipesSection.innerHTML = "";
 
         for ( i = 0; i < arrayOfRecipes.length; i++) {
@@ -148,10 +143,11 @@ function searchInRecipes(arrayOfRecipes, input, tagslist) {
             const flattenedDataIng = tagslistTemp.ing.flat();
             const flattenedDataApp = tagslistTemp.app.flat();
             const flattenedDataUst = tagslistTemp.ust.flat();
-            tagslist.ing = [...previousIngValues, ...new Set(flattenedDataIng)];
-            tagslist.app = [...previousAppValues, ...new Set(flattenedDataApp)];
-            tagslist.ust = [...previousUstValues, ...new Set(flattenedDataUst)];
+            tagslist.ing = [...new Set(flattenedDataIng)];
+            tagslist.app = [...new Set(flattenedDataApp)];
+            tagslist.ust = [...new Set(flattenedDataUst)];
           }
+
     displayData(temporyRecipesArr);
     updateAvailableFilters(temporyRecipesArr, filtersList)
     counterRecipes.textContent = `${temporyRecipesArr.length} recettes`
@@ -159,30 +155,53 @@ function searchInRecipes(arrayOfRecipes, input, tagslist) {
   }
 }
 
+function deleteMatchingTag(tagList, category) {
+  if (searchBar.value && tagList.some(tag => tag.toLowerCase().trim() === searchBar.value.toLowerCase().trim())) {
+    console.log("TEST ?");
+    const index = tagList.findIndex(tag => tag.toLowerCase().trim() === searchBar.value.toLowerCase().trim());
+    if (index !== -1) {
+        tagList.splice(index, 1);
+        counterRecipes.textContent = `${recipesList.length} recettes`;
+        searchBar.value = ""; // Effacer la valeur de la searchBar une fois le tag supprimé
+        recipesSection.innerHTML = "";
+        filterRecipesByTags(recipesList, tagsList);
+        updateAvailableFilters(recipesList, filtersList);
+    }
+    if (!searchBar.value && (tagsList.ing.length || tagsList.app.length || tagsList.ust.length)) {
+      searchInRecipes(recipesList, "", tagsList);
+      updateAvailableFilters(recipesList, filtersList);
+    }
+  }
+}
+
+// Ajouter un écouteur d'événements pour la touche Backspace
+searchBar.addEventListener('keydown', function(event) {
+  // Vérifier si la touche pressée est la touche Backspace et que la valeur de la barre de recherche est vide
+  if (event.key === 'Backspace' && searchBar.value.length === 0) {
+      // Récupérer le dernier élément de tagslist et le supprimer
+      const lastTagIndex = tagslist.length - 1;
+      tagslist.splice(lastTagIndex, 1);
+      // Mettre à jour l'affichage des tags
+      // Réafficher les recettes avec les filtres actuels
+      searchInRecipes(recipesList, "", tagslist);
+  }
+});
+
+
 searchBar.addEventListener("click", function(){
     const errorMsgHTML = document.querySelector(".error");
     const recipesSection = document.querySelector(".card-recipe-container");
     const reset = document.querySelector(".fa-xmark");
     reset.style.display = "none";
-    // searchBar.value = "";
-    // recipesSection.innerHTML = "";
     errorMsgHTML.innerHTML = "";
     errorMsgHTML.style.display = "none";
-    // filtersList.ing = [];
-    // filtersList.app = [];
-    // filtersList.ust = [];
-    // temporyRecipesArr = [];
-    // tagsList.ing = [];
-    // tagsList.app = [];
-    // tagsList.ust = [];
-    // listTagsHtml.innerHTML = "";
     updateAvailableFilters(recipesList, filtersList);
-    // init();
+
   });
 
   searchBar.addEventListener("input", function(){
-      console.log("Input event triggered");
-      searchBar.textContent = "";
+      // console.log("Input event triggered");
+      // searchBar.textContent = "";
       temporyRecipesArr = [];
       searchInRecipes(recipesList, searchBar.value, tagsList);
   });
@@ -196,7 +215,6 @@ function toggleDropdown(filterElement,iconElement, hiddenElement, property) {
     iconElement.classList.toggle("fa-angle-up");
     hiddenElement.classList.toggle(`filter-hidden-${property}`);
     hiddenElement.classList.toggle(`filter-visible-${property}`);
-
 }
 
 function setupFilter(filterElement, iconElement, hiddenElement, listElement, property, searchFunction, input, filteredRecipesArray, filterslist) {

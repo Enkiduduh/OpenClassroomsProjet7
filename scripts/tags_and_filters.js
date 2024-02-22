@@ -98,8 +98,9 @@ function filterRecipesByTags(arrayOfRecipes, tagslist) {
   } else {
     console.log("hey hey hey");
     // Si tagslist est vide, afficher arrayOfRecipes par défaut
+    recipesSection.innerHTML = "";
     displayData(arrayOfRecipes);
-    counterRecipes.textContent = `${filteredRecipes.length} recettes`;
+    counterRecipes.textContent = `${arrayOfRecipes.length} recettes`;
   }
 }
 
